@@ -16,7 +16,7 @@ http://orteil.dashnet.org/cookieclicker/img/ascendInfo.png
 http://orteil.dashnet.org/cookieclicker/img/ascendSlot.png
 http://orteil.dashnet.org/cookieclicker/img/ascendWisp.png
 http://orteil.dashnet.org/cookieclicker/img/ascendedBakingPod.png
-http://orteil.dashnet.org/cookieclicker/img/bank.png
+https://raw.githubusercontent.com/Konnitiwa768/cookieclicker-v2/refs/heads/gh-pages/img/bank.png
 http://orteil.dashnet.org/cookieclicker/img/bankBackground.png
 http://orteil.dashnet.org/cookieclicker/img/bankGrandma.png
 http://orteil.dashnet.org/cookieclicker/img/bgBW.jpg
