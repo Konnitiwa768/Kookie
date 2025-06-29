@@ -1,5 +1,5 @@
 # cookieclicker
-
+あ
 <img src="img/perfectCookie.png" width="128">
 https://konnitiwa768.github.io/cookieclicker-v2/
 The original game can be found at http://orteil.dashnet.org/cookieclicker/
