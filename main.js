@@ -167,25 +167,6 @@ function toFixed(x)
 }
 
 //Beautify and number-formatting adapted from the Frozen Cookies add-on (http://cookieclicker.wikia.com/wiki/Frozen_Cookies_%28JavaScript_Add-on%29)
-function formatEveryThirdPower(notations)
-{
-	return function (val)
-	{
-		var base=0,notationValue='';
-		if (!isFinite(val)) return 'Infinity';
-		if (val>=1000000)
-		{
-			val/=1000;
-			while(Math.round(val)>=1000)
-			{
-				val/=1000;
-				base++;
-			}
-			if (base>=notations.length) {return 'Infinity';} else {notationValue=notations[base];}
-		}
-		return (Math.round(val*1000)/1000)+notationValue;
-	};
-}
 
 function formatEveryFourthPower(notations) {
     return function (val) {
