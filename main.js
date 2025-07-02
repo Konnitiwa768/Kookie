@@ -170,7 +170,7 @@ function toFixed(x)
 
 function formatEveryFourthPower(notations) {
     return function (val) {
-        if (!isFinite(val)) return '無限大';
+        if (!isFinite(val)) return 'Infinity';
 
         var base = 0;
         while (val >= 10000 && base < notations.length) {
@@ -179,7 +179,7 @@ function formatEveryFourthPower(notations) {
         }
 
         if (base >= notations.length) {
-            return '無限大';
+            return 'Infinity';
         }
 
         return (Math.round(val * 1000) / 1000) + notations[base];
@@ -190,15 +190,14 @@ function formatEveryFourthPower(notations) {
   document.getElementById('japaneseUnitDisplay').innerText = japaneseUnits[base] || '';
 }
 const formatLong = [
-  ' 千', ' 百万', ' 十億', ' 兆', '千兆', ' 百京',
-  '十垓', '𥝱', '千𥝱' , '溝'
+  ' thousand', ' million', ' billion', ' trillion', 'quattorillion', ' quintillion', 'sextillion', 'septillion', 'octillion', 'nonillion'
 ];
 
-const prefixes = ['', '1桁倍の', '2桁倍上の', '3桁倍の', '4桁倍上の', '5桁倍上の', '6桁倍上の', '7桁倍上の', '8桁倍上の', '9桁倍上の'];
+const prefixes = ['', 'un', 'duo', 'tre', 'quad', 'quin', 'sex', 'septen', 'octn', 'novem'];
 const suffixes = [
-  'プラス10', 'プラス20', 'プラス30', 'プラス40',
-  'プラス50', 'プラス60', 'プラス70',
-  'プラス80', 'プラス90'
+  'unviginillion', 'duoviginillion', 'treviginillion', 'quattorviginillion',
+  'quinviginillion', 'sexviginillion', 'septviginillion',
+  'octoviginillion', 'novemviginillion'
 ];
 
 for (let i in suffixes) {
