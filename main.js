@@ -186,70 +186,25 @@ function formatEveryFourthPower(notations) {
     };
 }
 
+  const formattedVal = Math.round(val * 1000) / 1000;
+  document.getElementById('japaneseUnitDisplay').innerText = japaneseUnits[base] || '';
+}
 const formatLong = [
-  ' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion',
-  ' sextillion', ' septillion', ' octillion', ' nonillion'
+  ' 千', ' 百万', ' 十億', ' 兆', '千兆', ' 百京',
+  '十垓', '𥝱', '千𥝱' , '溝'
 ];
 
-const prefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
+const prefixes = ['', '1桁倍の', '2桁倍上の', '3桁倍の', '4桁倍上の', '5桁倍上の', '6桁倍上の', '7桁倍上の', '8桁倍上の', '9桁倍上の'];
 const suffixes = [
-  'decillion', 'vigintillion', 'trigintillion', 'quadragintillion',
-  'quinquagintillion', 'sexagintillion', 'septuagintillion',
-  'octogintillion', 'nonagintillion'
+  'プラス10', 'プラス20', 'プラス30', 'プラス40',
+  'プラス50', 'プラス60', 'プラス70',
+  'プラス80', 'プラス90'
 ];
 
 for (let i in suffixes) {
   for (let ii in prefixes) {
     formatLong.push(' ' + prefixes[ii] + suffixes[i]);
   }
-}
-
-const japaneseUnits = [
-  '千', '百万', '十億', '兆', '京', '垓', '秭', '穣', '溝', '澗',
-  '正', '載', '極', '恒河沙', '阿僧祇', '那由他', '不可思議', '無量大数'
-];
-
-// こんがら 10^69～10^111
-for (let i = 69; i <= 111; i++) {
-  japaneseUnits.push(`こんがら${i}`);
-}
-
-// あから 10^112～10^224
-for (let i = 112; i <= 224; i++) {
-  japaneseUnits.push(`あから${i}`);
-}
-
-// それ以降は仮単位を埋める（～308）
-for (let i = japaneseUnits.length; i < formatLong.length; i++) {
-  japaneseUnits.push(`単位${i}`);
-}
-
-function formatAndDisplay(val) {
-  let base = 0, notationValue = '';
-
-  if (!isFinite(val)) {
-    document.getElementById('valueDisplay').innerText = 'Infinity';
-    document.getElementById('japaneseUnitDisplay').innerText = '無限大';
-    return;
-  }
-
-  if (val >= 1000000) {
-    val /= 1000;
-    while (Math.round(val) >= 1000) {
-      val /= 1000;
-      base++;
-    }
-
-    if (base >= formatLong.length) {
-      document.getElementById('japaneseUnitDisplay').innerText = '無限大';
-      return;
-    } else {
-      notationValue = formatLong[base];
-    }
-  }
-
-  const formattedVal = Math.round(val * 1000) / 1000;
-  document.getElementById('japaneseUnitDisplay').innerText = japaneseUnits[base] || '';
 }
 
 var formatShort=['k','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];
