@@ -186,59 +186,75 @@ function formatEveryFourthPower(notations) {
     };
 }
 
-function rawFormatter(val) {
-    return Math.round(val * 1000) / 1000;
-}
+<div id="valueDisplay"></div>
+<div id="japaneseUnitDisplay"></div>
 
-// 日本語・仏教超巨大数単位リスト（最大E+308までカバー）
-var formatLong = [
-    '',       // 基本
-    ' 万',
-    ' 億',
-    ' 兆',
-    ' 京',
-    ' 垓',
-    ' 秭',
-    ' 穣',
-    ' 溝',
-    ' 澗',
-    ' 正',
-    ' 載',
-    ' 極',
-    ' 恒河沙',
-    ' 阿僧祇',
-    ' 那由他',
-    ' 不可思議',
-    ' 無量大数',
-    ' 大不可思議',
-    ' 無辺際',
-    ' 無辺無際',
-    ' 無際無辺際',
-    ' 無極大数',
-    ' 大無極大数',
-    ' 無辺無極大数',
-    ' 無際無辺無極大数',
-    ' 大無限大数',
-    ' 無辺大無限大数',
-    ' 無際無辺大無限大数',
-    ' 無際無極無限大数',
-    ' 大無際無極無限大数'
-    // 必要ならさらに増やせますが、E+308付近までこの数で十分です
+<script>
+const formatLong = [
+  ' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion',
+  ' sextillion', ' septillion', ' octillion', ' nonillion'
 ];
 
-// 単位ごとに10の4乗ずつ上がるので、インデックスnは 10^(4n) に対応
+const prefixes = ['', 'un', 'duo', 'tre', 'quattuor', 'quin', 'sex', 'septen', 'octo', 'novem'];
+const suffixes = [
+  'decillion', 'vigintillion', 'trigintillion', 'quadragintillion',
+  'quinquagintillion', 'sexagintillion', 'septuagintillion',
+  'octogintillion', 'nonagintillion'
+];
 
-// 使用例
-var formatter = formatEveryFourthPower(formatLong);
+for (let i in suffixes) {
+  for (let ii in prefixes) {
+    formatLong.push(' ' + prefixes[ii] + suffixes[i]);
+  }
+}
 
-console.log(formatter(123));               // 123
-console.log(formatter(123456));            // 12.346 万
-console.log(formatter(123456789));         // 1.235 億
-console.log(formatter(1e16));              // 1 京
-console.log(formatter(1e52));              // 1 恒河沙
-console.log(formatter(1e68));              // 1 不可思議
-console.log(formatter(1e100));             // 1 無辺無際
-console.log(formatter(1e308));             // 無辺無際無極無限大数
+const japaneseUnits = [
+  '千', '百万', '十億', '兆', '京', '垓', '秭', '穣', '溝', '澗',
+  '正', '載', '極', '恒河沙', '阿僧祇', '那由他', '不可思議', '無量大数'
+];
+
+// こんがら 10^69～10^111
+for (let i = 69; i <= 111; i++) {
+  japaneseUnits.push(`こんがら${i}`);
+}
+
+// あから 10^112～10^224
+for (let i = 112; i <= 224; i++) {
+  japaneseUnits.push(`あから${i}`);
+}
+
+// それ以降は仮単位を埋める（～308）
+for (let i = japaneseUnits.length; i < formatLong.length; i++) {
+  japaneseUnits.push(`単位${i}`);
+}
+
+function formatAndDisplay(val) {
+  let base = 0, notationValue = '';
+
+  if (!isFinite(val)) {
+    document.getElementById('valueDisplay').innerText = 'Infinity';
+    document.getElementById('japaneseUnitDisplay').innerText = '無限大';
+    return;
+  }
+
+  if (val >= 1000000) {
+    val /= 1000;
+    while (Math.round(val) >= 1000) {
+      val /= 1000;
+      base++;
+    }
+
+    if (base >= formatLong.length) {
+      document.getElementById('japaneseUnitDisplay').innerText = '無限大';
+      return;
+    } else {
+      notationValue = formatLong[base];
+    }
+  }
+
+  const formattedVal = Math.round(val * 1000) / 1000;
+  document.getElementById('japaneseUnitDisplay').innerText = japaneseUnits[base] || '';
+}
 
 var formatShort=['k','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];
 var prefixes=['','Un','Do','Tr','Qa','Qi','Sx','Sp','Oc','No'];
