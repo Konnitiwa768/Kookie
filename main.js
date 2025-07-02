@@ -186,10 +186,6 @@ function formatEveryFourthPower(notations) {
     };
 }
 
-<div id="valueDisplay"></div>
-<div id="japaneseUnitDisplay"></div>
-
-<script>
 const formatLong = [
   ' thousand', ' million', ' billion', ' trillion', ' quadrillion', ' quintillion',
   ' sextillion', ' septillion', ' octillion', ' nonillion'
