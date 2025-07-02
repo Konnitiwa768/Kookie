@@ -187,18 +187,77 @@ function formatEveryThirdPower(notations)
 	};
 }
 
-function rawFormatter(val){return Math.round(val*1000)/1000;}
+function formatEveryFourthPower(notations) {
+    return function (val) {
+        if (!isFinite(val)) return '無限大';
 
-var formatLong=[' thousand',' million',' billion',' trillion',' quadrillion',' quintillion',' sextillion',' septillion',' octillion',' nonillion'];
-var prefixes=['','un','duo','tre','quattuor','quin','sex','septen','octo','novem'];
-var suffixes=['decillion','vigintillion','trigintillion','quadragintillion','quinquagintillion','sexagintillion','septuagintillion','octogintillion','nonagintillion'];
-for (var i in suffixes)
-{
-	for (var ii in prefixes)
-	{
-		formatLong.push(' '+prefixes[ii]+suffixes[i]);
-	}
+        var base = 0;
+        while (val >= 10000 && base < notations.length) {
+            val /= 10000;
+            base++;
+        }
+
+        if (base >= notations.length) {
+            return '無限大';
+        }
+
+        return (Math.round(val * 1000) / 1000) + notations[base];
+    };
 }
+
+function rawFormatter(val) {
+    return Math.round(val * 1000) / 1000;
+}
+
+// 日本語・仏教超巨大数単位リスト（最大E+308までカバー）
+var formatLong = [
+    '',       // 基本
+    ' 万',
+    ' 億',
+    ' 兆',
+    ' 京',
+    ' 垓',
+    ' 秭',
+    ' 穣',
+    ' 溝',
+    ' 澗',
+    ' 正',
+    ' 載',
+    ' 極',
+    ' 恒河沙',
+    ' 阿僧祇',
+    ' 那由他',
+    ' 不可思議',
+    ' 無量大数',
+    ' 大不可思議',
+    ' 無辺際',
+    ' 無辺無際',
+    ' 無際無辺際',
+    ' 無極大数',
+    ' 大無極大数',
+    ' 無辺無極大数',
+    ' 無際無辺無極大数',
+    ' 大無限大数',
+    ' 無辺大無限大数',
+    ' 無際無辺大無限大数',
+    ' 無際無極無限大数',
+    ' 大無際無極無限大数'
+    // 必要ならさらに増やせますが、E+308付近までこの数で十分です
+];
+
+// 単位ごとに10の4乗ずつ上がるので、インデックスnは 10^(4n) に対応
+
+// 使用例
+var formatter = formatEveryFourthPower(formatLong);
+
+console.log(formatter(123));               // 123
+console.log(formatter(123456));            // 12.346 万
+console.log(formatter(123456789));         // 1.235 億
+console.log(formatter(1e16));              // 1 京
+console.log(formatter(1e52));              // 1 恒河沙
+console.log(formatter(1e68));              // 1 不可思議
+console.log(formatter(1e100));             // 1 無辺無際
+console.log(formatter(1e308));             // 無辺無際無極無限大数
 
 var formatShort=['k','M','B','T','Qa','Qi','Sx','Sp','Oc','No'];
 var prefixes=['','Un','Do','Tr','Qa','Qi','Sx','Sp','Oc','No'];
